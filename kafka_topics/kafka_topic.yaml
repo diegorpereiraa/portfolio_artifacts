@@ -1,0 +1,34 @@
+---
+type: type.example
+validators:
+  qaEventSuccess:
+securityProtocol: "PLAINTEXT"
+bootstrapServer: "localhost:9092"
+bootstrapServerSsl:
+schemaRegistryUrl:
+schemaRegistryUrlSsl:
+clientId: TestProducer
+batchSize: "10000"
+acks: "0"
+autoOffsetResetConfig: "latest"
+execution:
+  kafkaProducerType: "KafkaProducer"
+  sleepBetweenProducerAndConsumer: 500
+  thinkTime: 200
+  eventConfig:
+    qaEvent:
+      keyType: java.lang.String
+      valueType: com.iot.example
+      events:
+        - value: "{ \"transactionRequestInfo\": { \"transactionId\": \"aslkdjasdkl-aslkdjasdkl-aslkdjasdkl\", \"transactionGroup\": \"aslkdjasdkl-iajsdlaijd-eirtujerlkt-owkrsojk\", \"owner\": \"ABC\", \"requestTime\": 1684250169102 }, \"eventInfo\": { \"anomalyEvent\": \"NEW\", \"anomalyId\": \"a1s2d3fd35w5\", \"actor\": \"ADE\" }, \"data\": { \"extendedFields\": { \"customerId\": \"123456789\", \"apn\": \"apn.example\", \"ggsnDiameterIp\": null, \"radioAccessTechnology\": null, \"clientSourceIpAddress\": null, \"auditInfo\": null, \"trafficDirection\": null, \"nodeName\": null, \"dataCenterName\": null, \"sourceServiceName\": null, \"sourceGlobalTitleCountry\": null, \"destinationEntityName\": null, \"callScenario\": null, \"countryIso\": null, \"ggsnAddress\":\"2222\", \"ratType\": \"ratType1\"}, \"coreFields\": { \"firstAnomalousEventTimestamp\": 1684250160000, \"lastAnomalousEventTimestamp\": 1684250160000, \"creationDate\": 1684401708000, \"terminationDate\": null, \"timeFrame\": null, \"trafficType\": \"VOLTE\", \"context\": \"Multiple contexts\", \"impactedKpis\": { \"countFailed\": 2968, \"countSuccess\": 4247 }, \"description\": \"Generated Anomaly - Open event\", \"severity\": \"Low\", \"groupId\": \"volteTestGroupId:123\", \"assignee\": null, \"ticketId\": null, \"snoozedUntil\": null, \"statusReason\": null, \"statusReasonDetail\": null } } }"
+producersConfig:
+  qaEvent:
+    className:
+    keySerializer: org.apache.kafka.common.serialization.StringSerializer
+    valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+    topic: topic-name
+    interceptors:
+      - interceptorClassName:
+        fieldNames:
+          - creationDate
+        wildCard: "[systemMillis]"
